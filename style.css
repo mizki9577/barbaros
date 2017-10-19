@@ -1,0 +1,19 @@
+.root {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.word {
+    border: medium solid black;
+    margin: 0.1in;
+    padding: 0.1in;
+}
+
+.text {
+    font-size: 16pt;
+}
+
+.selectors {
+    display: flex;
+    flex-wrap: wrap;
+}
