@@ -4,16 +4,25 @@
 }
 
 .word {
-    border: medium solid black;
-    margin: 0.1in;
-    padding: 0.1in;
-}
-
-.text {
-    font-size: 16pt;
+    width: -moz-min-content;
+    width: -webkit-min-content;
+    flex-basis: auto;
 }
 
 .selectors {
     display: flex;
     flex-wrap: wrap;
+}
+
+.text, .translated {
+    display: block !important;
+}
+
+input {
+    font-family: serif;
+}
+
+select {
+    font-size: 10pt;
+    font-family: monospace;
 }
