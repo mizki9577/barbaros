@@ -51,7 +51,7 @@ const Word = ({ word }) => {
           ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(word, { person }) } />
           : null }
 
-        { ['verb', 'particle'].includes(word.category)
+        { ['verb', 'particle', 'infinitive'].includes(word.category)
           ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(word, { tense }) } />
           : null }
 
@@ -59,7 +59,7 @@ const Word = ({ word }) => {
           ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(word, { mood }) } />
           : null }
 
-        { ['verb', 'particle'].includes(word.category)
+        { ['verb', 'particle', 'infinitive'].includes(word.category)
           ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(word, { voice }) } />
           : null }
 
@@ -82,6 +82,7 @@ const CategorySelector = ({ category, onChange }) => (
     <option value="preposition">prep.</option>
     <option value="adverb"     >adv.</option>
     <option value="conjunction">conj.</option>
+    <option value="infinitive" >inf.</option>
     <option value="punctuation">punc.</option>
   </select>
 )
