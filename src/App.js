@@ -35,39 +35,39 @@ const Line = ({ line }) => (
 
 const Word = ({ word }) => (
   <div className="word">
-    <span className={ word.lemma ? null : 'noprint' } style={{ fontSize: '10pt' }}>{'<'}</span>
-    <AutosizeInput className="lemma" style={{ fontSize: '10pt' }} value={ word.lemma } onChange={ ev => actions.updateWord(word, { lemma: ev.target.value }) } />
-    <AutosizeInput className="text" style={{ fontSize: '10pt' }} value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
-    <AutosizeInput className="translated" style={{ fontSize: '10pt' }} value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
+    <span className={ 'lemma' + (word.lemma ? '' : ' noprint') }>{'<'}</span>
+    <AutosizeInput className="lemma" value={ word.lemma } onChange={ ev => actions.updateWord(word, { lemma: ev.target.value }) } />
+    <AutosizeInput className="text" value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
+    <AutosizeInput className="translated" value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
 
     <div className="selectors">
     <CategorySelector category={ word.category } onChange={ category => actions.updateWord(word, { category }) } />
 
-    { ['noun', 'verb', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
+    { ['noun', 'verb', 'adjective', 'participle', 'article', 'pronoun'].includes(word.category)
       ? <NumberSelector number={ word.number } onChange={ number => actions.updateWord(word, { number }) } />
       : null }
 
-  { ['noun', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
+  { ['noun', 'adjective', 'participle', 'article', 'pronoun'].includes(word.category)
       ? <GenderSelector gender={ word.gender } onChange={ gender => actions.updateWord(word, { gender }) } />
       : null }
 
-  { ['noun', 'adjective', 'particle', 'article', 'pronoun', 'preposition'].includes(word.category)
+  { ['noun', 'adjective', 'participle', 'article', 'pronoun', 'preposition'].includes(word.category)
       ? <CaseSelector case={ word.case } onChange={ kase => actions.updateWord(word, { case: kase }) } />
       : null }
 
-  { ['verb', 'particle'].includes(word.category)
+  { ['verb', 'participle'].includes(word.category)
       ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(word, { person }) } />
       : null }
 
-  { ['verb', 'particle', 'infinitive'].includes(word.category)
+  { ['verb', 'participle', 'infinitive'].includes(word.category)
       ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(word, { tense }) } />
       : null }
 
-  { ['verb', 'particle'].includes(word.category)
+  { ['verb', 'participle'].includes(word.category)
       ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(word, { mood }) } />
       : null }
 
-  { ['verb', 'particle', 'infinitive'].includes(word.category)
+  { ['verb', 'participle', 'infinitive'].includes(word.category)
       ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(word, { voice }) } />
       : null }
 
@@ -83,13 +83,14 @@ const CategorySelector = ({ category, onChange }) => (
     <option value="noun"       >noun</option>
     <option value="verb"       >verb</option>
     <option value="adjective"  >adj.</option>
-    <option value="particle"   >part.</option>
+    <option value="participle" >part.</option>
     <option value="article"    >a.</option>
     <option value="pronoun"    >pron.</option>
     <option value="preposition">prep.</option>
     <option value="adverb"     >adv.</option>
     <option value="conjunction">conj.</option>
     <option value="infinitive" >inf.</option>
+    <option value="particle"   >ptcl.</option>
     <option value="punctuation">punc.</option>
   </select>
 )
@@ -125,9 +126,9 @@ const CaseSelector = ({ case: kase, onChange }) => (
 
 const PersonSelector = ({ person, onChange }) => (
   <select value={ person } onChange={ ev => onChange(ev.target.value) }>
-    <option value={ 1 }>1</option>
-    <option value={ 2 }>2</option>
-    <option value={ 3 }>3</option>
+    <option value={ 1 }>1&nbsp;</option>
+    <option value={ 2 }>2&nbsp;</option>
+    <option value={ 3 }>3&nbsp;</option>
   </select>
 )
 
@@ -136,7 +137,7 @@ const TenseSelector = ({ tense, onChange }) => (
     <option value="present"       >pres.</option>
     <option value="past"          >past</option>
     <option value="imperfect"     >impf.</option>
-    <option value="perfect"       >pf.</option>
+    <option value="perfect"       >perf.</option>
     <option value="future"        >fut.</option>
     <option value="pluperfect"    >plpf.</option>
     <option value="aorist"        >aor.</option>
