@@ -18,13 +18,20 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="root">
-        { this.state.words.map((word, i) => <Word key={ i } word={ word } />) }
-        <button onClick={ () => actions.addWord() }>add a word</button>
+      <div>
+        { this.state.lines.map((line, i) => <Line key={ i } line={ line } />) }
+        <button onClick={ () => actions.addLine() }>new line</button>
       </div>
     )
   }
 }
+
+const Line = ({ line }) => (
+  <div className="line">
+    { line.map((word, i) => <Word key={ i } word={ word } />) }
+    <button onClick={ () => actions.addWord(line) }>new word</button>
+  </div>
+)
 
 const Word = ({ word }) => (
   <div className="word">

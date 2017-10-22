@@ -1,13 +1,16 @@
 import dispatcher from './dispatcher.js'
 
-export const addWord = (newWord = {}) => {
+export const addLine = () => {
+  dispatcher.dispatch({
+    type: 'ADD_LINE',
+  })
+}
+
+export const addWord = (line) => {
   dispatcher.dispatch({
     type: 'ADD_WORD',
-    newWord: {
-      text: '',
-      category: 'unknown',
-      ...newWord,
-    },
+    line,
+    word: {},
   })
 }
 

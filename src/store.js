@@ -12,30 +12,40 @@ class Store extends ReduceStore {
   getInitialState() {
     const state = JSON.parse(window.localStorage.getItem('state'))
     return state ? state : {
-      words: [],
+      lines: [],
     }
   }
 
   reduce(state, action) {
     switch (action.type) {
+      case 'ADD_LINE':
+        return {
+          ...state,
+          lines: [...state.lines, [{}]],
+        }
+
       case 'ADD_WORD':
         return {
           ...state,
-          words: [
-            ...state.words,
-            action.newWord,
-          ],
+          lines: state.lines.map(
+            line => line !== action.line ? line : [
+              ...line,
+              action.word,
+            ]
+          ),
         }
 
       case 'UPDATE_WORD':
         return {
           ...state,
-          words: state.words.map(
-            word => word !== action.word ? word : {
-              ...word,
-              ...action.payload,
-            }
-          )
+          lines: state.lines.map(
+            line => line.map(
+              word => word !== action.word ? word : {
+                ...word,
+                ...action.payload,
+              }
+            )
+          ),
         }
 
       default:
