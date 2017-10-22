@@ -132,6 +132,7 @@ const PersonSelector = ({ person, onChange }) => (
 const TenseSelector = ({ tense, onChange }) => (
   <select value={ tense } onChange={ ev => onChange(ev.target.value) }>
     <option value="present"       >pres.</option>
+    <option value="past"          >past</option>
     <option value="imperfect"     >impf.</option>
     <option value="perfect"       >pf.</option>
     <option value="future"        >fut.</option>
