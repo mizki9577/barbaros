@@ -4,7 +4,7 @@
 }
 
 .word {
-    margin: 0.2in 0.1in;
+    margin: 0.1in;
     width: -moz-min-content;
     width: -webkit-min-content;
     flex-basis: auto;
@@ -29,6 +29,10 @@ select {
 }
 
 @media print {
+    .noprint {
+        visibility: hidden;
+    }
+
     input, select {
         -webkit-appearance: none;
         border: none;

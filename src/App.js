@@ -35,6 +35,8 @@ const Line = ({ line }) => (
 
 const Word = ({ word }) => (
   <div className="word">
+    <span className={ word.lemma ? null : 'noprint' } style={{ fontSize: '10pt' }}>{'<'}</span>
+    <AutosizeInput className="lemma" style={{ fontSize: '10pt' }} value={ word.lemma } onChange={ ev => actions.updateWord(word, { lemma: ev.target.value }) } />
     <AutosizeInput className="text" style={{ fontSize: '10pt' }} value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
     <AutosizeInput className="translated" style={{ fontSize: '10pt' }} value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
 
