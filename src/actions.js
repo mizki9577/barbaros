@@ -10,7 +10,9 @@ export const addWord = (line) => {
   dispatcher.dispatch({
     type: 'ADD_WORD',
     line,
-    word: {},
+    word: {
+      category: 'noun',
+    },
   })
 }
 
