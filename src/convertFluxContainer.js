@@ -9,3 +9,4 @@ export default containerClass => {
   containerClass.calculateState = tmp.calculateState
   return containerClass
 }
+// vim: set ts=2 sw=2 et:

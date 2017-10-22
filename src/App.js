@@ -161,3 +161,4 @@ const ComparisonSelector = ({ comparison, onChange }) => (
 )
 
 export default Container.create(convertFluxContainer(App))
+// vim: set ts=2 sw=2 et:
