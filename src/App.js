@@ -26,50 +26,48 @@ class App extends React.Component {
   }
 }
 
-const Word = ({ word }) => {
-  return (
-    <div className="word">
-      <AutosizeInput className="text" style={{ fontSize: '10pt' }} value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
-      <AutosizeInput className="translated" style={{ fontSize: '10pt' }} value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
+const Word = ({ word }) => (
+  <div className="word">
+    <AutosizeInput className="text" style={{ fontSize: '10pt' }} value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
+    <AutosizeInput className="translated" style={{ fontSize: '10pt' }} value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
 
-      <div className="selectors">
-        <CategorySelector category={ word.category } onChange={ category => actions.updateWord(word, { category }) } />
+    <div className="selectors">
+    <CategorySelector category={ word.category } onChange={ category => actions.updateWord(word, { category }) } />
 
-        { ['noun', 'verb', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
-          ? <NumberSelector number={ word.number } onChange={ number => actions.updateWord(word, { number }) } />
-          : null }
+    { ['noun', 'verb', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
+      ? <NumberSelector number={ word.number } onChange={ number => actions.updateWord(word, { number }) } />
+      : null }
 
-        { ['noun', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
-          ? <GenderSelector gender={ word.gender } onChange={ gender => actions.updateWord(word, { gender }) } />
-          : null }
+  { ['noun', 'adjective', 'particle', 'article', 'pronoun'].includes(word.category)
+      ? <GenderSelector gender={ word.gender } onChange={ gender => actions.updateWord(word, { gender }) } />
+      : null }
 
-        { ['noun', 'adjective', 'particle', 'article', 'pronoun', 'preposition'].includes(word.category)
-          ? <CaseSelector case={ word.case } onChange={ kase => actions.updateWord(word, { case: kase }) } />
-          : null }
+  { ['noun', 'adjective', 'particle', 'article', 'pronoun', 'preposition'].includes(word.category)
+      ? <CaseSelector case={ word.case } onChange={ kase => actions.updateWord(word, { case: kase }) } />
+      : null }
 
-        { ['verb', 'particle'].includes(word.category)
-          ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(word, { person }) } />
-          : null }
+  { ['verb', 'particle'].includes(word.category)
+      ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(word, { person }) } />
+      : null }
 
-        { ['verb', 'particle', 'infinitive'].includes(word.category)
-          ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(word, { tense }) } />
-          : null }
+  { ['verb', 'particle', 'infinitive'].includes(word.category)
+      ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(word, { tense }) } />
+      : null }
 
-        { ['verb', 'particle'].includes(word.category)
-          ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(word, { mood }) } />
-          : null }
+  { ['verb', 'particle'].includes(word.category)
+      ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(word, { mood }) } />
+      : null }
 
-        { ['verb', 'particle', 'infinitive'].includes(word.category)
-          ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(word, { voice }) } />
-          : null }
+  { ['verb', 'particle', 'infinitive'].includes(word.category)
+      ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(word, { voice }) } />
+      : null }
 
-        { ['adjective'].includes(word.category)
-          ? <ComparisonSelector comparison={ word.comparison } onChange={ comparison => actions.updateWord(word, { comparison }) } />
-          : null }
-      </div>
+  { ['adjective'].includes(word.category)
+      ? <ComparisonSelector comparison={ word.comparison } onChange={ comparison => actions.updateWord(word, { comparison }) } />
+      : null }
     </div>
-  )
-}
+  </div>
+)
 
 const CategorySelector = ({ category, onChange }) => (
   <select value={ category } onChange={ ev => onChange(ev.target.value) }>
