@@ -28,51 +28,51 @@ class App extends React.Component {
 
 const Line = ({ line }) => (
   <div className="line">
-    { line.map((word, i) => <Word key={ i } word={ word } />) }
+    { line.map((word, i) => <Word key={ i } line={ line } word={ word } />) }
     <button onClick={ () => actions.addWord(line) }>new word</button>
   </div>
 )
 
-const Word = ({ word }) => (
+const Word = ({ line, word }) => (
   <div className="word">
     <span className={ 'lemma' + (word.lemma ? '' : ' noprint') }>{'<'}</span>
-    <AutosizeInput className="lemma" value={ word.lemma } onChange={ ev => actions.updateWord(word, { lemma: ev.target.value }) } />
-    <AutosizeInput className="text" value={ word.text } onChange={ ev => actions.updateWord(word, { text: ev.target.value }) } />
-    <AutosizeInput className="translated" value={ word.translated } onChange={ ev => actions.updateWord(word, { translated: ev.target.value }) } />
+    <AutosizeInput className="lemma" value={ word.lemma } onChange={ ev => actions.updateWord(line, word, { lemma: ev.target.value }) } />
+    <AutosizeInput className="text" value={ word.text } onChange={ ev => actions.updateWord(line, word, { text: ev.target.value }) } />
+    <AutosizeInput className="translated" value={ word.translated } onChange={ ev => actions.updateWord(line, word, { translated: ev.target.value }) } />
 
     <div className="selectors">
-    <CategorySelector category={ word.category } onChange={ category => actions.updateWord(word, { category }) } />
+    <CategorySelector category={ word.category } onChange={ category => actions.updateWord(line, word, { category }) } />
 
     { ['noun', 'verb', 'adjective', 'participle', 'article', 'pronoun'].includes(word.category)
-      ? <NumberSelector number={ word.number } onChange={ number => actions.updateWord(word, { number }) } />
+      ? <NumberSelector number={ word.number } onChange={ number => actions.updateWord(line, word, { number }) } />
       : null }
 
   { ['noun', 'adjective', 'participle', 'article', 'pronoun'].includes(word.category)
-      ? <GenderSelector gender={ word.gender } onChange={ gender => actions.updateWord(word, { gender }) } />
+      ? <GenderSelector gender={ word.gender } onChange={ gender => actions.updateWord(line, word, { gender }) } />
       : null }
 
   { ['noun', 'adjective', 'participle', 'article', 'pronoun', 'preposition'].includes(word.category)
-      ? <CaseSelector case={ word.case } onChange={ kase => actions.updateWord(word, { case: kase }) } />
+      ? <CaseSelector case={ word.case } onChange={ kase => actions.updateWord(line, word, { case: kase }) } />
       : null }
 
   { ['verb', 'participle'].includes(word.category)
-      ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(word, { person }) } />
+      ? <PersonSelector person={ word.person } onChange={ person => actions.updateWord(line, word, { person }) } />
       : null }
 
   { ['verb', 'participle', 'infinitive'].includes(word.category)
-      ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(word, { tense }) } />
+      ? <TenseSelector tense={ word.tense } onChange={ tense => actions.updateWord(line, word, { tense }) } />
       : null }
 
   { ['verb', 'participle'].includes(word.category)
-      ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(word, { mood }) } />
+      ? <MoodSelector mood={ word.mood } onChange={ mood => actions.updateWord(line, word, { mood }) } />
       : null }
 
   { ['verb', 'participle', 'infinitive'].includes(word.category)
-      ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(word, { voice }) } />
+      ? <VoiceSelector voice={ word.voice } onChange={ voice => actions.updateWord(line, word, { voice }) } />
       : null }
 
   { ['adjective'].includes(word.category)
-      ? <ComparisonSelector comparison={ word.comparison } onChange={ comparison => actions.updateWord(word, { comparison }) } />
+      ? <ComparisonSelector comparison={ word.comparison } onChange={ comparison => actions.updateWord(line, word, { comparison }) } />
       : null }
     </div>
   </div>

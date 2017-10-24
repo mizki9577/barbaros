@@ -16,10 +16,10 @@ export const addWord = (line) => {
   })
 }
 
-export const updateWord = (word, payload) => {
+export const updateWord = (line, word, payload) => {
   dispatcher.dispatch({
     type: 'UPDATE_WORD',
-    word, payload,
+    line, word, payload,
   })
 }
 // vim: set ts=2 sw=2 et:

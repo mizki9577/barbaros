@@ -39,7 +39,7 @@ class Store extends ReduceStore {
         return {
           ...state,
           lines: state.lines.map(
-            line => line.map(
+            line => line !== action.line ? line : line.map(
               word => word !== action.word ? word : {
                 ...word,
                 ...action.payload,
