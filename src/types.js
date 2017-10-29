@@ -6,12 +6,12 @@ export type State = {|
 
 export type Line = Word[]
 
-export type Word = {
+export type Word = $Shape<{
   category: Category,
   text: string,
   lemma: string,
   translated: string,
-} & $Shape<{
+
   number: Number,
   gender: Gender,
   case: Case,
@@ -46,7 +46,7 @@ type UpdateWord = {
   type: 'UPDATE_WORD',
   line: Line,
   word: Word,
-  payload: $Shape<Word>,
+  payload: Word,
 }
 
 export type Action = AddLine | AddWord | UpdateWord
