@@ -1,3 +1,6 @@
+// @flow
+import type { State } from './types.js'
+
 import React from 'react'
 import { Container } from 'flux/utils'
 import AutosizeInput from 'react-input-autosize'
@@ -7,7 +10,7 @@ import convertFluxContainer from './convertFluxContainer.js'
 import store from './store.js'
 import * as actions from './actions.js'
 
-class App extends React.Component {
+class App extends React.Component<void, State> {
   static getStores() {
     return [store]
   }
