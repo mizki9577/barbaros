@@ -5,10 +5,27 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     try {
-      this.state = JSON.parse(window.localStorage.getItem("state"));
+      const savedState = JSON.parse(window.localStorage.getItem("state"));
+      if (savedState == null) {
+        this.state = {
+          lines: [
+            {
+              words: [defaultWord()],
+              translation: ""
+            }
+          ]
+        };
+      } else {
+        this.state = savedState;
+      }
     } catch (e) {
       this.state = {
-        lines: [[defaultWord()]]
+        lines: [
+          {
+            words: [defaultWord()],
+            translation: ""
+          }
+        ]
       };
     }
   }
@@ -17,9 +34,25 @@ export default class App extends React.Component {
     window.localStorage.setItem("state", JSON.stringify(this.state));
   }
 
+  updateTranslation(lineIndex, translation) {
+    const linesHead = this.state.lines.slice(0, lineIndex);
+    const theLine = this.state.lines[lineIndex];
+    const linesTail = this.state.lines.slice(lineIndex + 1);
+    this.setState({
+      lines: [
+        ...linesHead,
+        {
+          ...theLine,
+          translation
+        },
+        ...linesTail
+      ]
+    });
+  }
+
   addLine() {
     this.setState({
-      lines: [...this.state.lines, [{}]]
+      lines: [...this.state.lines, {}]
     });
   }
 
@@ -28,7 +61,14 @@ export default class App extends React.Component {
     const theLine = this.state.lines[lineIndex];
     const linesTail = this.state.lines.slice(lineIndex + 1);
     this.setState({
-      lines: [...linesHead, [...theLine, defaultWord()], ...linesTail]
+      lines: [
+        ...linesHead,
+        {
+          ...theLine,
+          words: [...theLine.words, defaultWord()]
+        },
+        ...linesTail
+      ]
     });
   }
 
@@ -37,14 +77,17 @@ export default class App extends React.Component {
     const theLine = this.state.lines[lineIndex];
     const linesTail = this.state.lines.slice(lineIndex + 1);
 
-    const wordsHead = theLine.slice(0, wordIndex);
-    const theWord = theLine[wordIndex];
-    const wordsTail = theLine.slice(wordIndex + 1);
+    const wordsHead = theLine.words.slice(0, wordIndex);
+    const theWord = theLine.words[wordIndex];
+    const wordsTail = theLine.words.slice(wordIndex + 1);
 
     this.setState({
       lines: [
         ...linesHead,
-        [...wordsHead, { ...theWord, ...diff }, ...wordsTail],
+        {
+          ...theLine,
+          words: [...wordsHead, { ...theWord, ...diff }, ...wordsTail]
+        },
         ...linesTail
       ]
     });
@@ -55,11 +98,18 @@ export default class App extends React.Component {
     const theLine = this.state.lines[lineIndex];
     const linesTail = this.state.lines.slice(lineIndex + 1);
 
-    const wordsHead = theLine.slice(0, wordIndex);
-    const wordsTail = theLine.slice(wordIndex + 1);
+    const wordsHead = theLine.words.slice(0, wordIndex);
+    const wordsTail = theLine.words.slice(wordIndex + 1);
 
     this.setState({
-      lines: [...linesHead, [...wordsHead, ...wordsTail], ...linesTail]
+      lines: [
+        ...linesHead,
+        {
+          ...theLine,
+          words: [...wordsHead, ...wordsTail]
+        },
+        ...linesTail
+      ]
     });
   }
 
@@ -74,7 +124,10 @@ export default class App extends React.Component {
       }
     }
     this.setState({
-      lines: lines.map(line => line.split(/ +/).map(word => defaultWord(word)))
+      lines: lines.map(line => ({
+        words: line.split(/ +/).map(word => defaultWord(word)),
+        translation: ""
+      }))
     });
   }
 
@@ -85,6 +138,9 @@ export default class App extends React.Component {
           <Line
             key={i}
             line={line}
+            updateTranslation={translation =>
+              this.updateTranslation(i, translation)
+            }
             addWord={() => this.addWord(i)}
             updateWord={(wordIndex, diff) =>
               this.updateWord(i, wordIndex, diff)
@@ -99,17 +155,23 @@ export default class App extends React.Component {
   }
 }
 
-const Line = ({ line, addWord, updateWord, deleteWord }) => (
-  <div className="line">
-    {line.map((word, i) => (
-      <Word
-        key={i}
-        word={word}
-        updateWord={diff => updateWord(i, diff)}
-        deleteWord={() => deleteWord(i)}
-      />
-    ))}
-    <button onClick={addWord}>new word</button>
+const Line = ({ line, updateTranslation, addWord, updateWord, deleteWord }) => (
+  <div className="line-wrapper">
+    <div className="line">
+      {line.words.map((word, i) => (
+        <Word
+          key={i}
+          word={word}
+          updateWord={diff => updateWord(i, diff)}
+          deleteWord={() => deleteWord(i)}
+        />
+      ))}
+      <button onClick={addWord}>new word</button>
+    </div>
+    <AutosizeInput
+      value={line.translation}
+      onChange={ev => updateTranslation(ev.target.value)}
+    />
   </div>
 );
 
@@ -175,7 +237,7 @@ const Word = ({ word, updateWord }) => (
         />
       ) : null}
 
-      {["verb", "participle"].includes(word.category) ? (
+      {["verb"].includes(word.category) ? (
         <PersonSelector
           person={word.person}
           onChange={person => updateWord({ person })}
@@ -189,7 +251,7 @@ const Word = ({ word, updateWord }) => (
         />
       ) : null}
 
-      {["verb", "participle"].includes(word.category) ? (
+      {["verb"].includes(word.category) ? (
         <MoodSelector
           mood={word.mood}
           onChange={mood => updateWord({ mood })}
@@ -226,6 +288,8 @@ const CategorySelector = ({ category, onChange }) => (
     <option value="conjunction">conj.</option>
     <option value="infinitive">inf.</option>
     <option value="particle">ptcl.</option>
+    <option value="interjection">interj.</option>
+    <option value="negator">neg.</option>
     <option value="punctuation">punc.</option>
   </select>
 );
