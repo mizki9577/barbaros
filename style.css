@@ -21,7 +21,7 @@ body {
 }
 
 .text > input,
-.translation > input {
+.translation {
   font-family: serif;
   font-size: 10pt;
 }
@@ -32,7 +32,7 @@ body {
 }
 
 .lemma,
-.translated > input {
+.translated {
   font-size: 8pt;
 }
 
@@ -42,23 +42,18 @@ select {
 }
 
 @media print {
+  .header,
+  button,
   .noprint {
-    visibility: hidden;
+    display: none;
   }
 
-  .line {
-    justify-content: space-between;
+  .line-wrapper {
     page-break-inside: avoid;
   }
 
   input,
   select {
     border-width: 0;
-    background: transparent;
-  }
-
-  button {
-    visibility: hidden;
   }
 }
-/* vim: set ts=4 sw=4 et: */

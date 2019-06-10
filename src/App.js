@@ -9,6 +9,7 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       filename: DEFAULT_FILENAME,
+      forPrint: false,
       lines: [
         {
           words: [makeWord()],
@@ -146,18 +147,33 @@ export default class App extends React.Component {
     });
   }
 
+  togglePrintView() {
+    this.setState({ forPrint: !this.state.forPrint });
+  }
+
   render() {
     return (
       <>
-        <FileSelector
-          value={this.state.filename}
-          onChange={filename => this.loadFile(filename)}
-        />
-        <button onClick={() => this.importFromString()}>import</button>
+        <div className="header">
+          <FileSelector
+            value={this.state.filename}
+            onChange={filename => this.loadFile(filename)}
+          />
+          <label>
+            <input
+              type="checkbox"
+              checked={this.state.forPrint}
+              onChange={() => this.togglePrintView()}
+            />
+            print view
+          </label>
+          <button onClick={() => this.importFromString()}>import</button>
+        </div>
         {this.state.lines.map((line, i) => (
           <Line
             key={i}
             line={line}
+            forPrint={this.state.forPrint}
             updateTranslation={translation =>
               this.updateTranslation(i, translation)
             }
@@ -174,41 +190,63 @@ export default class App extends React.Component {
   }
 }
 
-const Line = ({ line, updateTranslation, addWord, updateWord, deleteWord }) => (
+const Line = ({
+  line,
+  forPrint,
+  updateTranslation,
+  addWord,
+  updateWord,
+  deleteWord
+}) => (
   <div className="line-wrapper">
     <div className="line">
       {line.words.map((word, i) => (
         <Word
           key={i}
           word={word}
+          forPrint={forPrint}
           updateWord={diff => updateWord(i, diff)}
           deleteWord={() => deleteWord(i)}
         />
       ))}
       <button onClick={addWord}>new word</button>
     </div>
-    <AutosizeInput
+    <PrintableInput
       className="translation"
       value={line.translation}
+      forPrint={forPrint}
       onChange={ev => updateTranslation(ev.target.value)}
     />
   </div>
 );
 
-const Word = ({ word, updateWord }) => (
+const PrintableInput = ({ forPrint, ...props }) => (
+  <span className={props.className}>
+    {forPrint ? (
+      props.value || "\u00A0"
+    ) : (
+      <AutosizeInput value={props.value} onChange={props.onChange} />
+    )}
+  </span>
+);
+
+const Word = ({ word, forPrint, updateWord }) => (
   <div className="word">
     <span className={"lemma" + (word.lemma ? "" : " noprint")}>{"<"}</span>
-    <AutosizeInput
+    <PrintableInput
+      forPrint={forPrint}
       className="lemma"
       value={word.lemma}
       onChange={ev => updateWord({ lemma: ev.target.value })}
     />
-    <AutosizeInput
+    <PrintableInput
+      forPrint={forPrint}
       className="text"
       value={word.text}
       onChange={ev => updateWord({ text: ev.target.value })}
     />
-    <AutosizeInput
+    <PrintableInput
+      forPrint={forPrint}
       className="translated"
       value={word.translated}
       onChange={ev => updateWord({ translated: ev.target.value })}
