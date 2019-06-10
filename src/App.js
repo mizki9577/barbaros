@@ -1,37 +1,52 @@
 import React from "react";
 import AutosizeInput from "react-input-autosize";
 
+const FILE_PREFIX = "barbaros-";
+const DEFAULT_FILENAME = "default";
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    try {
-      const savedState = JSON.parse(window.localStorage.getItem("state"));
-      if (savedState == null) {
-        this.state = {
-          lines: [
-            {
-              words: [defaultWord()],
-              translation: ""
-            }
-          ]
-        };
-      } else {
-        this.state = savedState;
-      }
-    } catch (e) {
-      this.state = {
-        lines: [
-          {
-            words: [defaultWord()],
-            translation: ""
-          }
-        ]
-      };
-    }
+    this.state = {
+      filename: DEFAULT_FILENAME,
+      lines: [
+        {
+          words: [makeWord()],
+          translation: ""
+        }
+      ]
+    };
+  }
+
+  componentDidMount() {
+    this.loadFile(this.state.filename);
+    this.saveFile();
   }
 
   componentDidUpdate() {
-    window.localStorage.setItem("state", JSON.stringify(this.state));
+    window.localStorage.setItem(
+      FILE_PREFIX + this.state.filename,
+      JSON.stringify(this.state)
+    );
+  }
+
+  loadFile(filename) {
+    try {
+      const savedState = JSON.parse(
+        window.localStorage.getItem(FILE_PREFIX + filename)
+      );
+      if (savedState != null) {
+        this.setState({ ...savedState, filename });
+      }
+    } finally {
+    }
+  }
+
+  saveFile() {
+    window.localStorage.setItem(
+      FILE_PREFIX + this.state.filename,
+      JSON.stringify(this.state)
+    );
   }
 
   updateTranslation(lineIndex, translation) {
@@ -65,7 +80,7 @@ export default class App extends React.Component {
         ...linesHead,
         {
           ...theLine,
-          words: [...theLine.words, defaultWord()]
+          words: [...theLine.words, makeWord()]
         },
         ...linesTail
       ]
@@ -125,7 +140,7 @@ export default class App extends React.Component {
     }
     this.setState({
       lines: lines.map(line => ({
-        words: line.split(/ +/).map(word => defaultWord(word)),
+        words: line.split(/ +/).map(word => makeWord(word)),
         translation: ""
       }))
     });
@@ -134,6 +149,11 @@ export default class App extends React.Component {
   render() {
     return (
       <>
+        <FileSelector
+          value={this.state.filename}
+          onChange={filename => this.loadFile(filename)}
+        />
+        <button onClick={() => this.importFromString()}>import</button>
         {this.state.lines.map((line, i) => (
           <Line
             key={i}
@@ -149,7 +169,6 @@ export default class App extends React.Component {
           />
         ))}
         <button onClick={() => this.addLine()}>new line</button>
-        <button onClick={() => this.importFromString()}>import</button>
       </>
     );
   }
@@ -369,7 +388,35 @@ const ComparisonSelector = ({ comparison, onChange }) => (
   </select>
 );
 
-const defaultWord = (text = "") => ({
+const FileSelector = ({ value, onChange }) => {
+  const files = ["default"];
+  for (let i = 0; i < window.localStorage.length; ++i) {
+    const key = window.localStorage.key(i);
+    if (key.startsWith(FILE_PREFIX) && key !== FILE_PREFIX + DEFAULT_FILENAME) {
+      files.push(key.slice(FILE_PREFIX.length));
+    }
+  }
+  return (
+    <select value={value} onChange={ev => onChange(ev.target.value)}>
+      {files.map((file, i) => (
+        <option key={i} value={file}>
+          {file}
+        </option>
+      ))}
+    </select>
+  );
+};
+
+const initialState = () => ({
+  lines: [
+    {
+      words: [makeWord()],
+      translation: ""
+    }
+  ]
+});
+
+const makeWord = (text = "") => ({
   category: "noun",
   text,
   lemma: "",
