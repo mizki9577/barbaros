@@ -50,6 +50,15 @@ export default class App extends React.Component {
     });
   }
 
+  importFromString() {
+    const text = window.prompt("text to import:", "lorem ipsum dolor sit amet");
+    this.setState({
+      lines: text
+        .split("\n")
+        .map(line => line.split(" ").map(word => defaultWord(word)))
+    });
+  }
+
   render() {
     return (
       <>
@@ -64,6 +73,7 @@ export default class App extends React.Component {
           />
         ))}
         <button onClick={() => this.addLine()}>new line</button>
+        <button onClick={() => this.importFromString()}>import</button>
       </>
     );
   }
@@ -269,9 +279,9 @@ const ComparisonSelector = ({ comparison, onChange }) => (
   </select>
 );
 
-const defaultWord = () => ({
+const defaultWord = (text = "") => ({
   category: "noun",
-  text: "",
+  text,
   lemma: "",
   translated: ""
 });
