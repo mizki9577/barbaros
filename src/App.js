@@ -50,12 +50,25 @@ export default class App extends React.Component {
     });
   }
 
+  deleteWord(lineIndex, wordIndex) {
+    const linesHead = this.state.lines.slice(0, lineIndex);
+    const theLine = this.state.lines[lineIndex];
+    const linesTail = this.state.lines.slice(lineIndex + 1);
+
+    const wordsHead = theLine.slice(0, wordIndex);
+    const wordsTail = theLine.slice(wordIndex + 1);
+
+    this.setState({
+      lines: [...linesHead, [...wordsHead, ...wordsTail], ...linesTail]
+    });
+  }
+
   importFromString() {
     const text = window.prompt("text to import:", "lorem ipsum dolor sit amet");
     this.setState({
       lines: text
-        .split("\n")
-        .map(line => line.split(" ").map(word => defaultWord(word)))
+        .split(/ *\n+ */)
+        .map(line => line.split(/ +/).map(word => defaultWord(word)))
     });
   }
 
@@ -70,6 +83,7 @@ export default class App extends React.Component {
             updateWord={(wordIndex, diff) =>
               this.updateWord(i, wordIndex, diff)
             }
+            deleteWord={wordIndex => this.deleteWord(i, wordIndex)}
           />
         ))}
         <button onClick={() => this.addLine()}>new line</button>
@@ -79,10 +93,15 @@ export default class App extends React.Component {
   }
 }
 
-const Line = ({ line, addWord, updateWord }) => (
+const Line = ({ line, addWord, updateWord, deleteWord }) => (
   <div className="line">
     {line.map((word, i) => (
-      <Word key={i} word={word} updateWord={diff => updateWord(i, diff)} />
+      <Word
+        key={i}
+        word={word}
+        updateWord={diff => updateWord(i, diff)}
+        deleteWord={() => deleteWord(i)}
+      />
     ))}
     <button onClick={addWord}>new word</button>
   </div>
