@@ -169,6 +169,7 @@ const Line = ({ line, updateTranslation, addWord, updateWord, deleteWord }) => (
       <button onClick={addWord}>new word</button>
     </div>
     <AutosizeInput
+      className="translation"
       value={line.translation}
       onChange={ev => updateTranslation(ev.target.value)}
     />

@@ -1,63 +1,64 @@
 body {
-    margin: 0;
+  margin: 0;
 }
 
 .line {
-    display: flex;
-    flex-wrap: wrap;
-    page-break-inside: avoid;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.word {
-    margin: 0.5em;
-    flex-basis: auto;
+.word:not(:last-of-type) {
+  margin-right: 0.5em;
 }
 
-.selectors {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.text, .translated {
-    display: block !important;
+.text,
+.translated {
+  display: block !important;
 }
 
 .text {
-    border-bottom: solid thin black;
+  border-bottom: solid thin black;
 }
 
-.text > input {
-    font-family: serif;
-    font-size: 10pt;
+.text > input,
+.translation > input {
+  font-family: serif;
+  font-size: 10pt;
 }
 
 .lemma > input {
-    font-size: 8pt;
-    font-family: serif;
+  font-size: 8pt;
+  font-family: serif;
 }
 
-.lemma, .translated > input {
-    font-size: 8pt;
+.lemma,
+.translated > input {
+  font-size: 8pt;
 }
 
 select {
-    font-size: 8pt;
-    font-family: monospace;
+  font-size: 8pt;
+  font-family: monospace;
 }
 
 @media print {
-    .noprint {
-        visibility: hidden;
-    }
+  .noprint {
+    visibility: hidden;
+  }
 
-    input, select {
-        -webkit-appearance: none;
-        border: none;
-        background: transparent;
-    }
+  .line {
+    justify-content: space-between;
+    page-break-inside: avoid;
+  }
 
-    button {
-        visibility: hidden;
-    }
+  input,
+  select {
+    border-width: 0;
+    background: transparent;
+  }
+
+  button {
+    visibility: hidden;
+  }
 }
 /* vim: set ts=4 sw=4 et: */
