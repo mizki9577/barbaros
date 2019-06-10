@@ -64,11 +64,17 @@ export default class App extends React.Component {
   }
 
   importFromString() {
-    const text = window.prompt("text to import:", "lorem ipsum dolor sit amet");
+    const lines = [];
+    while (true) {
+      const line = window.prompt("text to import (leave empty to finish):");
+      if (0 < line.length) {
+        lines.push(line.trim());
+      } else {
+        break;
+      }
+    }
     this.setState({
-      lines: text
-        .split(/ *\n+ */)
-        .map(line => line.split(/ +/).map(word => defaultWord(word)))
+      lines: lines.map(line => line.split(/ +/).map(word => defaultWord(word)))
     });
   }
 
