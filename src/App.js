@@ -4,9 +4,17 @@ import AutosizeInput from "react-input-autosize";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      lines: [[defaultWord()]]
-    };
+    try {
+      this.state = JSON.parse(window.localStorage.getItem("state"));
+    } catch (e) {
+      this.state = {
+        lines: [[defaultWord()]]
+      };
+    }
+  }
+
+  componentDidUpdate() {
+    window.localStorage.setItem("state", JSON.stringify(this.state));
   }
 
   addLine() {
@@ -44,7 +52,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         {this.state.lines.map((line, i) => (
           <Line
             key={i}
@@ -56,7 +64,7 @@ export default class App extends React.Component {
           />
         ))}
         <button onClick={() => this.addLine()}>new line</button>
-      </div>
+      </>
     );
   }
 }
