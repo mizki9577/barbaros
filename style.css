@@ -1,0 +1,30 @@
+main {
+  margin: 1em;
+}
+
+.word-text,
+.word-lemma,
+.word-translation,
+.line-translation {
+  font-family: Times, serif;
+}
+
+.line {
+  margin: 1em 0;
+}
+
+.words {
+  display: flex;
+  column-gap: 1em;
+}
+
+.word-text,
+.word-translation {
+  display: block;
+}
+
+.word-text {
+  border-bottom: thin solid black;
+}
+
+/* vim: set ts=2 sw=2 et: */
