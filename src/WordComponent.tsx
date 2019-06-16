@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EditableText, Button, MenuItem, HTMLSelect } from "@blueprintjs/core";
+import { EditableText } from "@blueprintjs/core";
 import makeSelector from "./makeSelector";
 import { Word } from "./types";
 import {
@@ -11,8 +11,6 @@ import {
   hasGender,
   hasCase
 } from "./utils";
-
-type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 const WordComponent = ({
   onChange,

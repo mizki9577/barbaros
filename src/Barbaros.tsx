@@ -1,6 +1,6 @@
 import * as React from "react";
 import { lensIndex, lensPath, over, mergeLeft } from "ramda";
-import { Line, Word, Pos } from "./types";
+import { Line, Word } from "./types";
 import { makeWord } from "./utils";
 
 import AppHeader from "./AppHeader";

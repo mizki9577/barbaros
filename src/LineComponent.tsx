@@ -1,11 +1,5 @@
 import * as React from "react";
-import {
-  Card,
-  Button,
-  ButtonGroup,
-  EditableText,
-  Icon
-} from "@blueprintjs/core";
+import { Card, Button, ButtonGroup, EditableText } from "@blueprintjs/core";
 import WordComponent from "./WordComponent";
 import WordSeparator from "./WordSeparator";
 import { Line, Word } from "./types";
