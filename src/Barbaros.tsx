@@ -1,5 +1,5 @@
 import * as React from "react";
-import { lensIndex, lensPath, over, mergeLeft } from "ramda";
+import { lensIndex, lensPath, over, mergeLeft, insertAll } from "ramda";
 import { Line, Word } from "./types";
 import { makeWord } from "./utils";
 
@@ -57,6 +57,16 @@ export default class Barbaros extends React.Component<Props, State> {
     });
   }
 
+  insertText(lineIndex: number, wordIndex: number, text: string) {
+    this.setState({
+      lines: over(
+        lensPath([lineIndex, "words"]),
+        insertAll(wordIndex, text.split(/\s+/).map(makeWord)),
+        this.state.lines
+      )
+    });
+  }
+
   handleWordChange(lineIndex: number, wordIndex: number, obj: Partial<Word>) {
     this.setState({
       lines: over(
@@ -85,6 +95,9 @@ export default class Barbaros extends React.Component<Props, State> {
               onLineChange={obj => this.handleLineChange(i, obj)}
               onWordChange={(wordIndex, obj) =>
                 this.handleWordChange(i, wordIndex, obj)
+              }
+              insertText={(wordIndex, text) =>
+                this.insertText(i, wordIndex, text)
               }
               {...line}
             />
