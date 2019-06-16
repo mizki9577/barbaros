@@ -22,13 +22,30 @@ export default class Barbaros extends React.Component<Props, State> {
       lines: [
         {
           words: [
-            makeWord("lorem"),
+            makeWord("Lorem"),
             makeWord("ipsum"),
             makeWord("dolor"),
             makeWord("sit"),
-            makeWord("amet")
+            makeWord("amet,"),
+            makeWord("consectetur"),
+            makeWord("adipisicing"),
+            makeWord("elit,")
           ],
           translation: "いろはにほへと ちりぬるを"
+        },
+        {
+          words: [
+            makeWord("Εδώ"),
+            makeWord("αν"),
+            makeWord("κάποιο"),
+            makeWord("πακέτων."),
+            makeWord("Όλη"),
+            makeWord("πω"),
+            makeWord("κάνε"),
+            makeWord("μέση"),
+            makeWord("είχαμε,")
+          ],
+          translation: "わかよたれそ つねならむ"
         }
       ]
     };

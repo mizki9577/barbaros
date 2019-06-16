@@ -13,9 +13,22 @@ main {
   margin: 1em 0;
 }
 
+.line-menu {
+  float: right;
+}
+
 .words {
   display: flex;
-  column-gap: 1em;
+  flex-wrap: wrap;
+}
+
+.word-separator {
+  width: 1em;
+  height: 100%;
+}
+
+.word-separator-caret {
+  padding-top: 2em;
 }
 
 .word-text,
@@ -24,6 +37,7 @@ main {
 }
 
 .word-text {
+  font-size: larger;
   border-bottom: thin solid black;
 }
 

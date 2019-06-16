@@ -1,6 +1,13 @@
 import * as React from "react";
-import { Card, EditableText } from "@blueprintjs/core";
+import {
+  Card,
+  Button,
+  ButtonGroup,
+  EditableText,
+  Icon
+} from "@blueprintjs/core";
 import WordComponent from "./WordComponent";
+import WordSeparator from "./WordSeparator";
 import { Line, Word } from "./types";
 
 const LineComponent = ({
@@ -12,14 +19,19 @@ const LineComponent = ({
   onWordChange: (wordIndex: number, obj: Partial<Word>) => void;
 } & Line) => (
   <Card className="line">
+    <ButtonGroup className="line-menu" minimal>
+      <Button icon="eraser" text="削除" />
+    </ButtonGroup>
     <div className="words">
-      {line.words.map((word, i) => (
+      <WordSeparator index={0} />
+      {line.words.flatMap((word, i) => [
         <WordComponent
-          key={i}
+          key={i * 2}
           onChange={word => onWordChange(i, word)}
           {...word}
-        />
-      ))}
+        />,
+        <WordSeparator key={i * 2 + 1} index={i + 1} />
+      ])}
     </div>
     <div className="line-translation">
       <EditableText
