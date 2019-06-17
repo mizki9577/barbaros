@@ -4,8 +4,7 @@ import { Line, Word } from "./types";
 import { makeWord, makeLine } from "./utils";
 
 import AppHeader from "./AppHeader";
-import LineComponent from "./LineComponent";
-import LineSeparator from "./LineSeparator";
+import Lines from "./Lines";
 
 export type Props = {};
 export type State = {
@@ -19,37 +18,20 @@ export default class Barbaros extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      title: "The Lipsum",
-      lines: [
-        {
-          words: [
-            makeWord("Lorem"),
-            makeWord("ipsum"),
-            makeWord("dolor"),
-            makeWord("sit"),
-            makeWord("amet,"),
-            makeWord("consectetur"),
-            makeWord("adipisicing"),
-            makeWord("elit,")
-          ],
-          translation: "いろはにほへと ちりぬるを"
-        },
-        {
-          words: [
-            makeWord("Εδώ"),
-            makeWord("αν"),
-            makeWord("κάποιο"),
-            makeWord("πακέτων."),
-            makeWord("Όλη"),
-            makeWord("πω"),
-            makeWord("κάνε"),
-            makeWord("μέση"),
-            makeWord("είχαμε,")
-          ],
-          translation: "わかよたれそ つねならむ"
-        }
-      ]
+      title: "",
+      lines: []
     };
+  }
+
+  componentDidMount() {
+    const savedState = window.localStorage.getItem("barbaros");
+    if (savedState) {
+      this.setState(JSON.parse(savedState));
+    }
+  }
+
+  componentDidUpdate() {
+    window.localStorage.setItem("barbaros", JSON.stringify(this.state));
   }
 
   handleLineChange(lineIndex: number, obj: Partial<Line>) {
@@ -100,24 +82,19 @@ export default class Barbaros extends React.Component<Props, State> {
           onTitleChange={title => this.handleTitleChange(title)}
         />
         <main>
-          <LineSeparator insertLine={text => this.insertLine(0, text)} />
-          {this.state.lines.map((line, i) => (
-            <React.Fragment key={i}>
-              <LineComponent
-                onLineChange={obj => this.handleLineChange(i, obj)}
-                onWordChange={(wordIndex, obj) =>
-                  this.handleWordChange(i, wordIndex, obj)
-                }
-                insertText={(wordIndex, text) =>
-                  this.insertText(i, wordIndex, text)
-                }
-                {...line}
-              />
-              <LineSeparator
-                insertLine={text => this.insertLine(i + 1, text)}
-              />
-            </React.Fragment>
-          ))}
+          <Lines
+            lines={this.state.lines}
+            onLineChange={(lineIndex, obj) =>
+              this.handleLineChange(lineIndex, obj)
+            }
+            onWordChange={(lineIndex, wordIndex, obj) =>
+              this.handleWordChange(lineIndex, wordIndex, obj)
+            }
+            insertText={(lineIndex, wordIndex, text) =>
+              this.insertText(lineIndex, wordIndex, text)
+            }
+            insertLine={(lineIndex, text) => this.insertLine(lineIndex, text)}
+          />
         </main>
       </>
     );
