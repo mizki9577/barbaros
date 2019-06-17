@@ -1,8 +1,7 @@
-import { Word, Pos, Mood } from "./types";
+import { Word, Line, Pos, Mood } from "./types";
 
-export const makeWord = (text: string): Word => ({
-  text
-});
+export const makeWord = (text: string): Word => ({ text });
+export const makeLine = (words: Word[]): Line => ({ words, translation: "" });
 
 export const hasPerson = (pos?: Pos, mood?: Mood) => {
   return pos === "verb" && mood !== "infinitive";

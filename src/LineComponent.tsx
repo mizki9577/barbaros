@@ -20,19 +20,14 @@ const LineComponent = ({
     <ButtonGroup className="line-menu" minimal>
       <Button icon="eraser" text="削除" />
     </ButtonGroup>
-    <div className="words">
+    <div className="line-words">
       <WordSeparator insertText={text => insertText(0, text)} />
-      {line.words.flatMap((word, i) => [
-        <WordComponent
-          key={i * 2}
-          onChange={word => onWordChange(i, word)}
-          {...word}
-        />,
-        <WordSeparator
-          key={i * 2 + 1}
-          insertText={text => insertText(i + 1, text)}
-        />
-      ])}
+      {line.words.map((word, i) => (
+        <React.Fragment key={i}>
+          <WordComponent onChange={word => onWordChange(i, word)} {...word} />
+          <WordSeparator insertText={text => insertText(i + 1, text)} />
+        </React.Fragment>
+      ))}
     </div>
     <div className="line-translation">
       <EditableText

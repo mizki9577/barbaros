@@ -15,10 +15,10 @@ import {
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 type Props = {
-  insertText: (text: string) => void;
+  insertLine: (text: string) => void;
 };
 
-const WordSeparator = ({ insertText }: Props) => {
+const LineSeparator = ({ insertLine }: Props) => {
   const [isInsertMode, setInsertMode] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isCaretShown, showCaret] = React.useState(false);
@@ -35,7 +35,7 @@ const WordSeparator = ({ insertText }: Props) => {
             icon="confirm"
             intent={Intent.PRIMARY}
             text="確定"
-            onClick={() => (insertText(text), setInsertMode(false))}
+            onClick={() => (insertLine(text), setInsertMode(false))}
           />
           <Button
             icon="delete"
@@ -48,29 +48,29 @@ const WordSeparator = ({ insertText }: Props) => {
   } else {
     return (
       <Popover
-        targetClassName="word-separator-target"
+        wrapperTagName="div"
+        targetTagName="div"
         interactionKind={PopoverInteractionKind.HOVER}
         hoverOpenDelay={0}
         onOpening={() => showCaret(true)}
         onClosing={() => showCaret(false)}
       >
-        <div className="word-separator">
-          <Icon icon={isCaretShown ? "caret-down" : "blank"} />
-          <Icon icon={isCaretShown ? "caret-up" : "blank"} />
+        <div className="line-separator">
+          <Icon icon={isCaretShown ? "caret-right" : "blank"} />
+          <Icon icon={isCaretShown ? "caret-left" : "blank"} />
         </div>
         <Menu>
           <MenuItem
             icon="insert"
-            text="単語を挿入"
+            text="行を挿入"
             onClick={() => (setInsertMode(true), showCaret(false))}
           />
-          <MenuItem icon="key-enter" text="ここで改行" />
         </Menu>
       </Popover>
     );
   }
 };
 
-export default WordSeparator;
+export default LineSeparator;
 
 // vim: set ts=2 sw=2 et:

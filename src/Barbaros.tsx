@@ -1,10 +1,11 @@
 import * as React from "react";
-import { lensIndex, lensPath, over, mergeLeft, insertAll } from "ramda";
+import { lensIndex, lensPath, over, mergeLeft, insert, insertAll } from "ramda";
 import { Line, Word } from "./types";
-import { makeWord } from "./utils";
+import { makeWord, makeLine } from "./utils";
 
 import AppHeader from "./AppHeader";
 import LineComponent from "./LineComponent";
+import LineSeparator from "./LineSeparator";
 
 export type Props = {};
 export type State = {
@@ -67,6 +68,16 @@ export default class Barbaros extends React.Component<Props, State> {
     });
   }
 
+  insertLine(lineIndex: number, text: string) {
+    this.setState({
+      lines: insert(
+        lineIndex,
+        makeLine(text.split(/\s+/).map(makeWord)),
+        this.state.lines
+      )
+    });
+  }
+
   handleWordChange(lineIndex: number, wordIndex: number, obj: Partial<Word>) {
     this.setState({
       lines: over(
@@ -89,18 +100,23 @@ export default class Barbaros extends React.Component<Props, State> {
           onTitleChange={title => this.handleTitleChange(title)}
         />
         <main>
+          <LineSeparator insertLine={text => this.insertLine(0, text)} />
           {this.state.lines.map((line, i) => (
-            <LineComponent
-              key={i}
-              onLineChange={obj => this.handleLineChange(i, obj)}
-              onWordChange={(wordIndex, obj) =>
-                this.handleWordChange(i, wordIndex, obj)
-              }
-              insertText={(wordIndex, text) =>
-                this.insertText(i, wordIndex, text)
-              }
-              {...line}
-            />
+            <React.Fragment key={i}>
+              <LineComponent
+                onLineChange={obj => this.handleLineChange(i, obj)}
+                onWordChange={(wordIndex, obj) =>
+                  this.handleWordChange(i, wordIndex, obj)
+                }
+                insertText={(wordIndex, text) =>
+                  this.insertText(i, wordIndex, text)
+                }
+                {...line}
+              />
+              <LineSeparator
+                insertLine={text => this.insertLine(i + 1, text)}
+              />
+            </React.Fragment>
           ))}
         </main>
       </>

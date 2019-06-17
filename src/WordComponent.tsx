@@ -16,7 +16,7 @@ const WordComponent = ({
   onChange,
   ...word
 }: Word & { onChange: (obj: Partial<Word>) => void }) => (
-  <div className="word">
+  <div>
     <div>
       {"< "}
       <EditableText
@@ -43,7 +43,7 @@ const WordAttributes = ({
   onChange,
   ...word
 }: Word & { onChange: (obj: Partial<Word>) => void }) => (
-  <div className="selectors">
+  <div>
     <PosSelector
       value={word.pos}
       selectProps={{ minimal: true }}
