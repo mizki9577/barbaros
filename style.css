@@ -9,12 +9,7 @@ main {
   font-family: Times, serif;
 }
 
-.line-separator {
-  height: 1em;
-}
-
-.line-separator-caret {
-}
+/* line */
 
 .line-menu {
   float: right;
@@ -25,6 +20,7 @@ main {
   flex-wrap: wrap;
 }
 
+/* word */
 .word-text,
 .word-translation {
   display: block;
@@ -33,6 +29,12 @@ main {
 .word-text {
   font-size: larger;
   border-bottom: thin solid black;
+}
+
+.word-firstrow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 }
 
 /* separators */

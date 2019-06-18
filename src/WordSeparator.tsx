@@ -16,9 +16,10 @@ type ChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
 type Props = {
   insertText: (text: string) => void;
+  onLineSplit: () => void;
 };
 
-const WordSeparator = ({ insertText }: Props) => {
+const WordSeparator = ({ insertText, onLineSplit }: Props) => {
   const [isInsertMode, setInsertMode] = React.useState(false);
   const [text, setText] = React.useState("");
   const [isCaretShown, showCaret] = React.useState(false);
@@ -64,7 +65,7 @@ const WordSeparator = ({ insertText }: Props) => {
             text="単語を挿入"
             onClick={() => (setInsertMode(true), showCaret(false))}
           />
-          <MenuItem icon="key-enter" text="ここで改行" />
+          <MenuItem icon="key-enter" text="ここで改行" onClick={onLineSplit} />
         </Menu>
       </Popover>
     );

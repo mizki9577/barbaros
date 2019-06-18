@@ -20,6 +20,7 @@ type Props = {
   ) => void;
   insertLine: (lineIndex: number, text: string) => void;
   insertText: (lineIndex: number, wordIndex: number, text: string) => void;
+  onLineSplit: (lineIndex: number, wordIndex: number) => void;
 };
 
 const Lines = ({
@@ -27,7 +28,8 @@ const Lines = ({
   onLineChange,
   onWordChange,
   insertLine,
-  insertText
+  insertText,
+  onLineSplit
 }: Props) => {
   if (lines.length === 0) {
     return <Initial onConfirm={text => insertLine(0, text)} />;
@@ -41,6 +43,7 @@ const Lines = ({
               onLineChange={obj => onLineChange(i, obj)}
               onWordChange={(wordIndex, obj) => onWordChange(i, wordIndex, obj)}
               insertText={(wordIndex, text) => insertText(i, wordIndex, text)}
+              onLineSplit={wordIndex => onLineSplit(i, wordIndex)}
               {...line}
             />
             <LineSeparator insertLine={text => insertLine(i + 1, text)} />

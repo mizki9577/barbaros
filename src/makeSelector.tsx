@@ -6,7 +6,7 @@ type Props<T extends string> = {
   value?: string;
   shown?: boolean;
   selectProps?: IHTMLSelectProps;
-  onChange?: (value?: T) => void;
+  onChange: (value?: T) => void;
 };
 
 const makeSelector = <T extends string>(
@@ -19,12 +19,10 @@ const makeSelector = <T extends string>(
       {...selectProps}
       value={value}
       onChange={({ target: { value } }) => {
-        if (onChange) {
-          if (value === label) {
-            onChange();
-          } else {
-            onChange(value as T);
-          }
+        if (value === label) {
+          onChange();
+        } else {
+          onChange(value as T);
         }
       }}
     >

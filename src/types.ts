@@ -21,6 +21,8 @@ export type Pos =
   | "adjective"
   | "adverb"
   | "article"
+  | "conjunction"
+  | "interjection"
   | "noun"
   | "participle"
   | "particle"

@@ -1,5 +1,12 @@
 import * as React from "react";
-import { EditableText } from "@blueprintjs/core";
+import {
+  Intent,
+  EditableText,
+  Popover,
+  Button,
+  Menu,
+  MenuItem
+} from "@blueprintjs/core";
 import makeSelector from "./makeSelector";
 import { Word } from "./types";
 import {
@@ -12,31 +19,52 @@ import {
   hasCase
 } from "./utils";
 
-const WordComponent = ({
-  onChange,
-  ...word
-}: Word & { onChange: (obj: Partial<Word>) => void }) => (
-  <div>
-    <div>
-      {"< "}
+type Props = {
+  onChange: (obj: Partial<Word>) => void;
+  onDelete: () => void;
+} & Word;
+
+const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
+  const [isMenuShown, showMenu] = React.useState(false);
+  return (
+    <div
+      className="word"
+      onMouseEnter={() => showMenu(true)}
+      onMouseLeave={() => showMenu(false)}
+    >
+      <div className="word-firstrow">
+        <div>
+          <span>&lt;&nbsp;</span>
+          <EditableText
+            className="word-lemma"
+            value={word.lemma}
+            onChange={lemma => onChange({ lemma })}
+          />
+        </div>
+        <WordMenu shown={isMenuShown} />
+      </div>
       <EditableText
-        className="word-lemma"
-        value={word.lemma}
-        onChange={lemma => onChange({ lemma })}
+        className="word-text"
+        value={word.text}
+        onChange={text => onChange({ text })}
+      />
+      <WordAttributes onChange={onChange} {...word} />
+      <EditableText
+        className="word-translation"
+        value={word.translation}
+        onChange={translation => onChange({ translation })}
       />
     </div>
-    <EditableText
-      className="word-text"
-      value={word.text}
-      onChange={text => onChange({ text })}
-    />
-    <WordAttributes onChange={onChange} {...word} />
-    <EditableText
-      className="word-translation"
-      value={word.translation}
-      onChange={translation => onChange({ translation })}
-    />
-  </div>
+  );
+};
+
+const WordMenu = ({ shown }: { shown: boolean }) => (
+  <Popover className="word-menu">
+    <Button icon={shown ? "more" : "blank"} minimal />
+    <Menu>
+      <MenuItem icon="eraser" intent={Intent.DANGER} text="削除" />
+    </Menu>
+  </Popover>
 );
 
 const WordAttributes = ({
@@ -98,6 +126,8 @@ const PosSelector = makeSelector("品詞", [
   ["adjective", "形容詞"],
   ["adverb", "副詞"],
   ["article", "冠詞"],
+  ["conjunction", "接続詞"],
+  ["interjection", "間投詞"],
   ["noun", "名詞"],
   ["participle", "分詞"],
   ["particle", "小辞"],
