@@ -8,7 +8,7 @@ import {
   MenuItem
 } from "@blueprintjs/core";
 import * as selectors from "./selectors";
-import { Word } from "../types";
+import { Word as WordType } from "../types";
 import {
   hasPerson,
   hasNumber,
@@ -20,9 +20,9 @@ import {
 } from "../utils";
 
 type Props = {
-  onChange: (obj: Partial<Word>) => void;
+  onChange: (obj: Partial<WordType>) => void;
   onDelete: () => void;
-} & Word;
+} & WordType;
 
 export const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
   const [isMenuShown, showMenu] = React.useState(false);
@@ -70,7 +70,7 @@ const WordMenu = ({ shown }: { shown: boolean }) => (
 const WordAttributes = ({
   onChange,
   ...word
-}: Word & { onChange: (obj: Partial<Word>) => void }) => (
+}: WordType & { onChange: (obj: Partial<WordType>) => void }) => (
   <div>
     <selectors.PosSelector
       value={word.pos}

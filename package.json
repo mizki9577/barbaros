@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "parcel serve index.html",
-    "build": "parcel build --no-cache --no-source-maps --no-autoinstall --no-content-hash --public-url /barbaros index.html",
+    "build": "parcel build --no-cache --no-source-maps --no-autoinstall --no-content-hash --experimental-scope-hoisting --public-url /barbaros index.html",
     "lint": "tsc -w --noEmit",
     "gh-pages": "gh-pages -d dist"
   },
