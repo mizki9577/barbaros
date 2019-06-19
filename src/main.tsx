@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import Barbaros from "./Barbaros";
+import { Barbaros } from "./components";
 
 ReactDOM.render(<Barbaros />, document.getElementById("root"));
 

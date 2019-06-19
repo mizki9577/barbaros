@@ -9,7 +9,7 @@ type Props = {
   onTitleChange: (value: string) => void;
 };
 
-const AppHeader = ({ title, onTitleChange }: Props) => (
+export const AppHeader = ({ title, onTitleChange }: Props) => (
   <Navbar>
     <Navbar.Group align={Alignment.LEFT}>
       <Navbar.Heading>Barbaros</Navbar.Heading>
@@ -31,7 +31,5 @@ const AppHeader = ({ title, onTitleChange }: Props) => (
     <Navbar.Group align={Alignment.RIGHT} />
   </Navbar>
 );
-
-export default AppHeader;
 
 // vim: set ts=2 sw=2 et:

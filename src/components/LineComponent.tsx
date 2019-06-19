@@ -6,9 +6,8 @@ import {
   EditableText,
   Intent
 } from "@blueprintjs/core";
-import WordComponent from "./WordComponent";
-import WordSeparator from "./WordSeparator";
-import { Line, Word } from "./types";
+import { WordComponent, WordSeparator } from ".";
+import { Line, Word } from "../types";
 
 type Props = {
   onLineChange: (obj: Partial<Line>) => void;
@@ -17,7 +16,7 @@ type Props = {
   onLineSplit: (wordIndex: number) => void;
 } & Line;
 
-const LineComponent = ({
+export const LineComponent = ({
   onLineChange,
   onWordChange,
   insertText,
@@ -56,7 +55,5 @@ const LineComponent = ({
     </div>
   </Card>
 );
-
-export default LineComponent;
 
 // vim: set ts=2 sw=2 et:

@@ -6,9 +6,8 @@ import {
   ButtonGroup,
   Intent
 } from "@blueprintjs/core";
-import LineComponent from "./LineComponent";
-import LineSeparator from "./LineSeparator";
-import { Line, Word } from "./types";
+import { LineComponent, LineSeparator } from ".";
+import { Line, Word } from "../types";
 
 type Props = {
   lines: Line[];
@@ -23,7 +22,7 @@ type Props = {
   onLineSplit: (lineIndex: number, wordIndex: number) => void;
 };
 
-const Lines = ({
+export const Lines = ({
   lines,
   onLineChange,
   onWordChange,
@@ -81,7 +80,5 @@ const Initial = ({ onConfirm }: { onConfirm: (text: string) => void }) => {
     />
   );
 };
-
-export default Lines;
 
 // vim: set ts=2 sw=2 et:

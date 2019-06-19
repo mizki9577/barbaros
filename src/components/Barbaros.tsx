@@ -9,11 +9,11 @@ import {
   splitAt,
   remove
 } from "ramda";
-import { Line, Word } from "./types";
-import { makeWord, makeLine } from "./utils";
+import { Line, Word } from "../types";
+import { makeWord, makeLine } from "../utils";
 
-import AppHeader from "./AppHeader";
-import Lines from "./Lines";
+import { AppHeader } from ".";
+import { Lines } from ".";
 
 export type Props = {};
 export type State = {
@@ -21,7 +21,7 @@ export type State = {
   lines: Line[];
 };
 
-export default class Barbaros extends React.Component<Props, State> {
+export class Barbaros extends React.Component<Props, State> {
   state: State;
 
   constructor(props: Props) {
