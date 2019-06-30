@@ -1,2 +1,0 @@
-body{margin:0}.line{display:flex;flex-wrap:wrap}.word:not(:last-of-type){margin-right:.5em}.text,.translated{display:block!important}.text{border-bottom:thin solid #000}.text>input,.translation{font-family:serif;font-size:10pt}.lemma>input{font-family:serif}.lemma,.lemma>input,.translated,select{font-size:8pt}select{font-family:monospace}@media print{.header,.noprint,button{display:none}.line-wrapper{page-break-inside:avoid}input,select{border-width:0}}
-/*# sourceMappingURL=/barbaros/style.13e0d05c.css.map */
