@@ -17,7 +17,6 @@ import { Lines } from ".";
 
 export type Props = {};
 export type State = {
-  title: string;
   lines: Line[];
 };
 
@@ -27,7 +26,6 @@ export class Barbaros extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      title: "",
       lines: []
     };
   }
@@ -41,6 +39,28 @@ export class Barbaros extends React.Component<Props, State> {
 
   componentDidUpdate() {
     window.localStorage.setItem("barbaros", JSON.stringify(this.state));
+  }
+
+  handleCreate() {
+    // TODO make it more fancy
+    if (!window.confirm("Really?")) return;
+    this.setState({ lines: [] });
+  }
+
+  handleOpen(fileList: FileList) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      // TODO validation
+      this.setState(JSON.parse(reader.result as string));
+    };
+    reader.readAsText(fileList[0]);
+  }
+
+  handleSave() {
+    const blob = new Blob([JSON.stringify(this.state)], {
+      type: "application/octet-stream"
+    });
+    location.href = URL.createObjectURL(blob);
   }
 
   handleLineChange(lineIndex: number, obj: Partial<Line>) {
@@ -100,16 +120,13 @@ export class Barbaros extends React.Component<Props, State> {
     });
   }
 
-  handleTitleChange(title: string) {
-    this.setState({ title });
-  }
-
   render() {
     return (
       <>
         <AppHeader
-          title={this.state.title}
-          onTitleChange={title => this.handleTitleChange(title)}
+          onCreate={() => this.handleCreate()}
+          onOpen={fileList => this.handleOpen(fileList)}
+          onSave={() => this.handleSave()}
         />
         <main>
           <Lines
