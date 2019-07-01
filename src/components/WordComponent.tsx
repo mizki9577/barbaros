@@ -52,6 +52,11 @@ export const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
       <EditableText
         className="word-translation"
         value={word.translation}
+        intent={
+          word.translation === undefined || word.translation.length <= 0
+            ? Intent.DANGER
+            : Intent.NONE
+        }
         onChange={translation => onChange({ translation })}
       />
     </div>
@@ -74,49 +79,41 @@ const WordAttributes = ({
   <div>
     <selectors.PosSelector
       value={word.pos}
-      selectProps={{ minimal: true }}
       onChange={pos => onChange({ pos })}
     />
     <selectors.PersonSelector
       value={word.person}
       shown={hasPerson(word.pos, word.mood)}
-      selectProps={{ minimal: true }}
       onChange={person => onChange({ person })}
     />
     <selectors.NumberSelector
       value={word.number_}
       shown={hasNumber(word.pos, word.mood)}
-      selectProps={{ minimal: true }}
       onChange={number_ => onChange({ number_ })}
     />
     <selectors.TenseSelector
       value={word.tense}
       shown={hasTense(word.pos)}
-      selectProps={{ minimal: true }}
       onChange={tense => onChange({ tense })}
     />
     <selectors.MoodSelector
       value={word.mood}
       shown={hasMood(word.pos)}
-      selectProps={{ minimal: true }}
       onChange={mood => onChange({ mood })}
     />
     <selectors.VoiceSelector
       value={word.voice}
       shown={hasVoice(word.pos)}
-      selectProps={{ minimal: true }}
       onChange={voice => onChange({ voice })}
     />
     <selectors.GenderSelector
       value={word.gender}
       shown={hasGender(word.pos)}
-      selectProps={{ minimal: true }}
       onChange={gender => onChange({ gender })}
     />
     <selectors.CaseSelector
       value={word.case_}
       shown={hasCase(word.pos)}
-      selectProps={{ minimal: true }}
       onChange={case_ => onChange({ case_ })}
     />
   </div>

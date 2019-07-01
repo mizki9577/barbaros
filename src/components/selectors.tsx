@@ -1,38 +1,38 @@
 import * as React from "react";
-import { HTMLSelect } from "@blueprintjs/core";
-import { IHTMLSelectProps } from "@blueprintjs/core";
+import { Classes } from "@blueprintjs/core";
 
 type Props<T extends string> = {
   value?: string;
   shown?: boolean;
-  selectProps?: IHTMLSelectProps;
   onChange: (value?: T) => void;
 };
 
 const makeSelector = <T extends string>(
   label: string,
   entries: [T, string][]
-) => ({ value, shown, selectProps, onChange }: Props<T>) => {
+) => ({ value, shown, onChange }: Props<T>) => {
   if (shown === false) return null;
   return (
-    <HTMLSelect
-      {...selectProps}
-      value={value}
-      onChange={({ target: { value } }) => {
-        if (value === label) {
-          onChange();
-        } else {
-          onChange(value as T);
-        }
-      }}
-    >
-      <option>{label}</option>
-      {entries.map(([k, v], i) => (
-        <option key={i} value={k}>
-          {v}
-        </option>
-      ))}
-    </HTMLSelect>
+    <div className={`${Classes.SELECT} ${Classes.MINIMAL}`}>
+      <select
+        className={value === undefined ? Classes.INTENT_DANGER : ""}
+        value={value}
+        onChange={({ target: { value } }) => {
+          if (value === label) {
+            onChange();
+          } else {
+            onChange(value as T);
+          }
+        }}
+      >
+        <option>{label}</option>
+        {entries.map(([k, v], i) => (
+          <option key={i} value={k}>
+            {v}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 
