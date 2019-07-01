@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "parcel serve index.html",
-    "build": "parcel build --no-cache --no-source-maps --no-autoinstall --no-content-hash --experimental-scope-hoisting --public-url /barbaros index.html",
+    "build": "parcel build --no-cache --no-source-maps --no-autoinstall --no-content-hash --public-url /barbaros index.html",
     "lint": "tsc -w --noEmit",
     "gh-pages": "gh-pages -d dist"
   },
@@ -10,6 +10,7 @@
     "@types/ramda": "^0.26.9",
     "@types/react": "^16.8.19",
     "@types/react-dom": "^16.8.4",
+    "gh-pages": "^2.0.1",
     "parcel-bundler": "^1.12.3",
     "parcel-plugin-bundle-visualiser": "^1.2.0",
     "typescript": "^3.5.1"

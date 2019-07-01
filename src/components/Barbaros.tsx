@@ -56,11 +56,10 @@ export class Barbaros extends React.Component<Props, State> {
     reader.readAsText(fileList[0]);
   }
 
-  handleSave() {
-    const blob = new Blob([JSON.stringify(this.state)], {
-      type: "application/octet-stream"
-    });
-    location.href = URL.createObjectURL(blob);
+  getDownloadUrl(): string {
+    return URL.createObjectURL(
+      new Blob([JSON.stringify(this.state)], { type: "application/json" })
+    );
   }
 
   handleLineChange(lineIndex: number, obj: Partial<Line>) {
@@ -126,7 +125,7 @@ export class Barbaros extends React.Component<Props, State> {
         <AppHeader
           onCreate={() => this.handleCreate()}
           onOpen={fileList => this.handleOpen(fileList)}
-          onSave={() => this.handleSave()}
+          downloadUrl={this.getDownloadUrl()}
         />
         <main>
           <Lines
