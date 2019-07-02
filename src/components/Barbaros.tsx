@@ -119,6 +119,16 @@ export class Barbaros extends React.Component<Props, State> {
     });
   }
 
+  handleWordDelete(lineIndex: number, wordIndex: number) {
+    this.setState({
+      lines: over(
+        lensPath([lineIndex, "words"]),
+        remove(wordIndex, 1),
+        this.state.lines
+      )
+    });
+  }
+
   render() {
     return (
       <>
@@ -142,6 +152,9 @@ export class Barbaros extends React.Component<Props, State> {
             insertLine={(lineIndex, text) => this.insertLine(lineIndex, text)}
             onLineSplit={(lineIndex, wordIndex) =>
               this.handleLineSplit(lineIndex, wordIndex)
+            }
+            onWordDelete={(lineIndex, wordIndex) =>
+              this.handleWordDelete(lineIndex, wordIndex)
             }
           />
         </main>

@@ -41,7 +41,7 @@ export const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
             onChange={lemma => onChange({ lemma })}
           />
         </div>
-        <WordMenu shown={isMenuShown} />
+        <WordMenu shown={isMenuShown} onDelete={onDelete} />
       </div>
       <EditableText
         className="word-text"
@@ -63,11 +63,22 @@ export const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
   );
 };
 
-const WordMenu = ({ shown }: { shown: boolean }) => (
+const WordMenu = ({
+  shown,
+  onDelete
+}: {
+  shown: boolean;
+  onDelete: () => void;
+}) => (
   <Popover className="word-menu">
     <Button icon={shown ? "more" : "blank"} minimal />
     <Menu>
-      <MenuItem icon="eraser" intent={Intent.DANGER} text="削除" />
+      <MenuItem
+        icon="eraser"
+        intent={Intent.DANGER}
+        text="削除"
+        onClick={onDelete}
+      />
     </Menu>
   </Popover>
 );

@@ -14,6 +14,7 @@ type Props = {
   onWordChange: (wordIndex: number, obj: Partial<Word>) => void;
   insertText: (wordIndex: number, text: string) => void;
   onLineSplit: (wordIndex: number) => void;
+  onWordDelete: (wordIndex: number) => void;
 } & Line;
 
 export const LineComponent = ({
@@ -21,6 +22,7 @@ export const LineComponent = ({
   onWordChange,
   insertText,
   onLineSplit,
+  onWordDelete,
   ...line
 }: Props) => (
   <Card className="line">
@@ -36,7 +38,7 @@ export const LineComponent = ({
         <React.Fragment key={i}>
           <WordComponent
             onChange={word => onWordChange(i, word)}
-            onDelete={() => {}}
+            onDelete={() => onWordDelete(i)}
             {...word}
           />
           <WordSeparator
