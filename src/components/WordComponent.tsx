@@ -37,27 +37,27 @@ export const WordComponent = ({ onChange, onDelete, ...word }: Props) => {
           <span>&lt;&nbsp;</span>
           <EditableText
             className="word-lemma"
-            value={word.lemma}
-            onChange={lemma => onChange({ lemma })}
+            defaultValue={word.lemma}
+            onConfirm={lemma => onChange({ lemma })}
           />
         </div>
         <WordMenu shown={isMenuShown} onDelete={onDelete} />
       </div>
       <EditableText
         className="word-text"
-        value={word.text}
-        onChange={text => onChange({ text })}
+        defaultValue={word.text}
+        onConfirm={text => onChange({ text })}
       />
       <WordAttributes onChange={onChange} {...word} />
       <EditableText
         className="word-translation"
-        value={word.translation}
+        defaultValue={word.translation}
         intent={
           word.translation === undefined || word.translation.length <= 0
             ? Intent.DANGER
             : Intent.NONE
         }
-        onChange={translation => onChange({ translation })}
+        onConfirm={translation => onChange({ translation })}
       />
     </div>
   );

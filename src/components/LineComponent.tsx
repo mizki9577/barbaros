@@ -51,8 +51,8 @@ export const LineComponent = ({
     <div className="line-translation">
       <EditableText
         multiline
-        value={line.translation}
-        onChange={translation => onLineChange({ translation })}
+        defaultValue={line.translation}
+        onConfirm={translation => onLineChange({ translation })}
       />
     </div>
   </Card>
