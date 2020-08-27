@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.word:not(:last-of-type) {
+  margin-right: 0.5em;
+}
+
+.text,
+.translated {
+  display: block !important;
+}
+
+.text {
+  border-bottom: solid thin black;
+}
+
+.text > input,
+.translation {
+  font-family: serif;
+  font-size: 10pt;
+}
+
+.lemma > input {
+  font-size: 8pt;
+  font-family: serif;
+}
+
+.lemma,
+.translated {
+  font-size: 8pt;
+}
+
+select {
+  font-size: 8pt;
+  font-family: monospace;
+}
+
+@media print {
+  .header,
+  button,
+  .noprint {
+    display: none;
+  }
+
+  .line-wrapper {
+    page-break-inside: avoid;
+  }
+
+  input,
+  select {
+    border-width: 0;
+  }
+}
